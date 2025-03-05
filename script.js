@@ -129,21 +129,14 @@ function playGame() {
   }
 
   console.log(`---------- Final Score: ----------\n\n`);
-  console.log(
-    `Final score is: ${humanScore} - ${computerScore}.`
-  );
+  console.log(`Final score is: ${humanScore} - ${computerScore}.`);
   if (humanScore > computerScore) {
-    console.log(
-      `Congratulations, You Win!`
-    );
+    console.log(`Congratulations, You Win!`);
   } else if (humanScore < computerScore) {
-    console.log(
-      `Computer wins!`
-    );
+    console.log(`Computer wins!`);
   } else {
     console.log("It is a tie!");
   }
-
 }
 
 // Final
