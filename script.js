@@ -1,8 +1,10 @@
 console.log("Rock Paper Scissors Game");
 
+// global variables to track score
+let humanScore = 0;
+let computerScore = 0;
 
 // Human's Choice
-
 function getHumanChoice() {
   let choice = "";
   let number = parseInt(
