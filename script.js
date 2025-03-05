@@ -4,6 +4,10 @@ console.log("Rock Paper Scissors Game");
 let humanScore = 0;
 let computerScore = 0;
 
+// variables for choices
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
 // Human's Choice
 function getHumanChoice() {
   let choice = "";
@@ -56,8 +60,30 @@ function getComputerChoice() {
   return choice;
 }
 
-
+function playRound(humanChoice, computerChoice) {
+  if (humanChoice === "rock") {
+    if (computerChoice === "scissors") {
+      humanScore++;
+    } else if (computerChoice === "paper") {
+      computerScore++;
+    }
+  } else if (humanChoice === "paper") {
+    if (computerChoice === "rock") {
+      humanScore++;
+    } else if (computerChoice === "scissors") {
+      computerScore++;
+    }
+  } else if (humanChoice === "scissors") {
+    if (computerChoice === "paper") {
+      humanScore++;
+    } else if (computerChoice === "rock") {
+      computerScore++;
+    }
+  }
+}
 
 // Final display in console
-console.log(`Your choice is: ${getHumanChoice()}`);
-console.log(`Computer's choice is: ${getComputerChoice()}`);
+playRound(humanSelection, computerSelection);
+
+// console.log(`Your choice is: ${getHumanChoice()}`);
+// console.log(`Computer's choice is: ${getComputerChoice()}`);
