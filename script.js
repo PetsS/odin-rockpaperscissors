@@ -1,7 +1,6 @@
 // global variables to track score
 let humanScore = 0;
 let computerScore = 0;
-let roundCounter = 0;
 
 // Human's Choice
 function getHumanChoice() {
@@ -91,10 +90,8 @@ function displayScore(
   humanSelection,
   computerSelection,
   humanScore,
-  computerScore,
-  roundCounter
+  computerScore
 ) {
-  console.log(`---------- Round: ${roundCounter} ----------\n\n`);
   console.log(`Your choice is: ${humanSelection}`);
   console.log(`Computer's choice is: ${computerSelection}`);
   console.table("-----------------------------");
@@ -104,29 +101,18 @@ function displayScore(
 }
 
 function playGame() {
-  console.log(
-    "Rock Paper Scissors Game\n" +
-      "The game will play over 5 rounds.\n" +
-      "Rock beats Scissors, Scissors beats Paper, Paper beats Rock."
+
+  let humanSelection = getHumanChoice();
+  let computerSelection = getComputerChoice();
+
+  playRound(humanSelection, computerSelection);
+
+  displayScore(
+    humanSelection,
+    computerSelection,
+    humanScore,
+    computerScore
   );
-
-  while (roundCounter < 5) {
-    let humanSelection = getHumanChoice();
-    let computerSelection = getComputerChoice();
-
-    // increment the round by 1
-    roundCounter++;
-
-    playRound(humanSelection, computerSelection);
-
-    displayScore(
-      humanSelection,
-      computerSelection,
-      humanScore,
-      computerScore,
-      roundCounter
-    );
-  }
 
   console.log(`---------- Final Score: ----------\n\n`);
   console.log(`Final score is: ${humanScore} - ${computerScore}.`);
