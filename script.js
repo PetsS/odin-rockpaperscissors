@@ -1,89 +1,76 @@
 // global variables to track score
 let humanScore = 0;
 let computerScore = 0;
+let roundCounter = 0;
 
-// Human's Choice
-function getHumanChoice() {
-  let choice = "";
-  let number = parseInt(
-    prompt(
-      "What is your choice? Enter a number between 1 and 3 (1 - rock, 2 - paper, 3 - scissors)"
-    )
-  );
+// DOM
+const buttonContainer = document.querySelector("#buttons");
+const buttons = buttonContainer.querySelectorAll("button");
+const table = document.querySelector("#table");
+const tdPlayerChoice = document.querySelector("#playerChoice");
+const tdComputerChoice = document.querySelector("#computerChoice");
+const whoScoresMessage = document.querySelector("#scoreMessage");
+const tdPlayerScore = document.querySelector("#playerScore");
+const tdComputerScore = document.querySelector("#computerScore");
+const round = document.querySelector("#round");
+const btnPlayAgain = document.querySelector("#btnPlayAgain");
 
-  switch (number) {
-    case 1:
-      choice = "rock";
-      break;
-    case 2:
-      choice = "paper";
-      break;
-    case 3:
-      choice = "scissors";
-      break;
-    default:
-      choice = "not a valid number";
-      break;
-  }
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    playGame(button.id);
+  });
+});
 
-  return choice;
-}
+btnPlayAgain.addEventListener("click", resetGame);
 
 // Computer's Choice
 function getComputerChoice() {
-  let choice = "";
+  const choices = ["rock", "paper", "scissors"];
 
   // Generate a random number
-  let randomNumber = Math.floor(Math.random() * 3) + 1;
+  let randomNumber = Math.floor(Math.random() * 3);
 
-  switch (randomNumber) {
-    case 1:
-      choice = "rock";
-      break;
-    case 2:
-      choice = "paper";
-      break;
-    case 3:
-      choice = "scissors";
-      break;
-    default:
-      choice = "error";
-      break;
-  }
-
-  return choice;
+  return choices[randomNumber];
 }
 
 function playRound(humanChoice, computerChoice) {
-  let whoScores = "";
+  let message = "";
 
   if (humanChoice === "rock") {
     if (computerChoice === "scissors") {
       humanScore++;
-      whoScores = "You Score!";
+      message = "You Score!";
     } else if (computerChoice === "paper") {
       computerScore++;
-      whoScores = "Computer Scores!";
+      message = "Computer Scores!";
+    } else {
+      message = "Nobody Scores!";
     }
   } else if (humanChoice === "paper") {
     if (computerChoice === "rock") {
       humanScore++;
-      whoScores = "You Score!";
+      message = "You Score!";
     } else if (computerChoice === "scissors") {
       computerScore++;
-      whoScores = "Computer Scores!";
+      message = "Computer Scores!";
+    } else {
+      message = "Nobody Scores!";
     }
   } else if (humanChoice === "scissors") {
     if (computerChoice === "paper") {
       humanScore++;
-      whoScores = "You Score!";
+      message = "You Score!";
     } else if (computerChoice === "rock") {
       computerScore++;
-      whoScores = "Computer Scores!";
+      message = "Computer Scores!";
+    } else {
+      message = "Nobody Scores!";
     }
   }
 
-  return whoScores;
+  roundCounter++;
+  round.textContent = "Round : " + roundCounter;
+  return message;
 }
 
 function displayScore(
@@ -92,38 +79,47 @@ function displayScore(
   humanScore,
   computerScore
 ) {
-  console.log(`Your choice is: ${humanSelection}`);
-  console.log(`Computer's choice is: ${computerSelection}`);
-  console.table("-----------------------------");
-  console.log(`Your score is: ${humanScore}`);
-  console.log(`The Computer's score is: ${computerScore}`);
-  console.table("");
+  tdPlayerChoice.textContent = humanSelection;
+  tdComputerChoice.textContent = computerSelection;
+  tdPlayerScore.textContent = humanScore;
+  tdComputerScore.textContent = computerScore;
 }
 
-function playGame() {
+function resetGame() {
+  humanScore = 0;
+  computerScore = 0;
+  roundCounter = 0;
+  round.textContent = "";
+  tdPlayerChoice.textContent = "";
+  tdComputerChoice.textContent = "";
+  tdPlayerScore.textContent = "";
+  tdComputerScore.textContent = "";
+  whoScoresMessage.textContent = "";
+  buttons.forEach((button) => {
+    button.disabled = false;
+  });
+  btnPlayAgain.style.visibility = "hidden";
+}
 
-  let humanSelection = getHumanChoice();
+function playGame(playerChoice) {
+  let humanSelection = playerChoice;
   let computerSelection = getComputerChoice();
 
-  playRound(humanSelection, computerSelection);
+  whoScoresMessage.textContent = playRound(humanSelection, computerSelection);
 
-  displayScore(
-    humanSelection,
-    computerSelection,
-    humanScore,
-    computerScore
-  );
+  displayScore(humanSelection, computerSelection, humanScore, computerScore);
 
-  console.log(`---------- Final Score: ----------\n\n`);
-  console.log(`Final score is: ${humanScore} - ${computerScore}.`);
-  if (humanScore > computerScore) {
-    console.log(`Congratulations, You Win!`);
-  } else if (humanScore < computerScore) {
-    console.log(`Computer wins!`);
-  } else {
-    console.log("It is a tie!");
+  if (humanScore == 5 || computerScore == 5) {
+    if (humanScore == 5) {
+      whoScoresMessage.textContent = `Congratulations, You Win!`;
+    } else if (computerScore == 5) {
+      whoScoresMessage.textContent = `Computer wins!`;
+    }
+    // disable buttons if the score reaches 5
+    buttons.forEach((button) => {
+      button.disabled = true;
+    });
+    // make the Play Again button visible
+    btnPlayAgain.style.visibility = "visible";
   }
 }
-
-// Final
-playGame();
