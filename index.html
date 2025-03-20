@@ -4,11 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Odin - RPS</title>
+    <style>
+      #table {
+        margin-top: 10px;
+        border-radius: 6px;
+        border: 2px solid black;
+        padding: 4px;
+      }
+      #table th,
+      td {
+        padding-inline: 10px;
+      }
+      #scoreMessage {
+        margin-top: 10px;
+      }
+      #btnPlayAgain {
+        margin-top: 10px;
+        visibility: hidden;
+      }
+    </style>
   </head>
   <body>
-    <button id="btn-rock">✊</button>
-    <button id="btn-paper">✋</button>
-    <button id="btn-scissors">✌️</button>
+    <div id="buttons">
+      <button id="rock">✊</button>
+      <button id="paper">✋</button>
+      <button id="scissors">✌️</button>
+      <span id="round"></span>
+    </div>
+    <table id="table">
+      <tr>
+        <th>Your Choice</th>
+        <th>Score</th>
+        <th>Computer's Choice</th>
+        <th>Score</th>
+      </tr>
+      <tr>
+        <td id="playerChoice"></td>
+        <td id="playerScore"></td>
+        <td id="computerChoice"></td>
+        <td id="computerScore"></td>
+      </tr>
+    </table>
+
+    <div id="scoreMessage"></div>
+
+    <div>
+      <button id="btnPlayAgain">Play Again?</button>
+    </div>
 
     <script src="script.js"></script>
   </body>
